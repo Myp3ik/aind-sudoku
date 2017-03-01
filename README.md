@@ -12,6 +12,8 @@ in the these boxes and not any other. As a result we remove these values as poss
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
 A: To solve diagonal sudoku problem we use the same constraints we use with ordinary sudoku, except constraints become more strict.
 1 unit group of diagonals added, thus our 3 constraint propagation techniques started to limit possible values for more boxes.
+Before introducing this change each box had 20 peers, but now each box has 26 peers. So more boxes are dependant on each value
+assigned to the box.
 
 ### Install
 
