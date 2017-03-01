@@ -3,11 +3,15 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: *Student should provide answer here*
+A: Naked twins problem is solved with same constraint propagation techniques as ordinary sudoku grid plus one new constraint.
+Idea of all constraints is to limit possible values for each box. We use 3 constraints: "elimination", "only choice" and "naked twin".
+Last constraint limits box possible values even more if naked twin is found in the unit. Values for these units are possible only
+in the these boxes and not any other. As a result we remove these values as possibilities in other boxes in the same unit.
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: *Student should provide answer here*
+A: To solve diagonal sudoku problem we use the same constraints we use with ordinary sudoku, except constraints become more strict.
+1 unit group of diagonals added, thus our 3 constraint propagation techniques started to limit possible values for more boxes.
 
 ### Install
 
