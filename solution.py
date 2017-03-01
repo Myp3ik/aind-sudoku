@@ -32,6 +32,11 @@ def assign_value(values, box, value):
 
 
 def naked_twins(values):
+    """
+    Go through all boxes, find naked twins in each unit and purge peers from those twin values.
+    Input: A sudoku in dictionary form.
+    Output: The resulting sudoku in dictionary form.
+    """
     for box in boxes:
         test_val = values[box]
         if len(test_val) == 2:
@@ -51,6 +56,13 @@ def naked_twins(values):
 
 
 def grid_values(grid):
+    """
+    Convert grid into a dict of {square: char} with '123456789' for empties.
+    Input: A grid in string form.
+    Output: A grid in dictionary form
+            Keys: The boxes, e.g., 'A1'
+            Values: The value in each box, e.g., '8'. If the box has no value, then the value will be '123456789'.
+    """
     chars = []
     digits = '123456789'
     for c in grid:
@@ -63,6 +75,11 @@ def grid_values(grid):
 
 
 def display(values):
+    """
+    Display the values as a 2-D grid.
+    Input: The sudoku in dictionary form
+    Output: None
+    """
     width = 1 + max(len(values[s]) for s in boxes)
     line = '+'.join(['-' * (width * 3)] * 3)
     for r in rows:
@@ -73,6 +90,11 @@ def display(values):
 
 
 def eliminate(values):
+    """
+    Go through all the boxes, and whenever there is a box with a value, eliminate this value from the values of all its peers.
+    Input: A sudoku in dictionary form.
+    Output: The resulting sudoku in dictionary form.
+    """
     for box in values:
         digit = values[box]
         if len(digit) == 1:
@@ -82,6 +104,12 @@ def eliminate(values):
 
 
 def check_units(values, char, box):
+    """
+
+    Input: A sudoku in dictionary form, char to search in values of all units, origin box
+    Output: True if only possible value found for at least one unit.
+            False if char is found in at least one unit
+    """
     for unit in units[box]:
         found = False
         for box_of_unit in unit:
@@ -97,6 +125,11 @@ def check_units(values, char, box):
 
 
 def only_choice(values):
+    """
+    Go through all the units, and whenever there is a unit with a value that only fits in one box, assign the value to this box.
+    Input: A sudoku in dictionary form.
+    Output: The resulting sudoku in dictionary form.
+    """
     for box in values:
         if len(values[box]) > 1:
             for char in values[box]:
@@ -106,6 +139,13 @@ def only_choice(values):
 
 
 def reduce_puzzle(values):
+    """
+    Iterate eliminate(), naked_twind() and only_choice(). If at some point, there is a box with no available values, return False.
+    If the sudoku is solved, return the sudoku.
+    If after an iteration of both functions, the sudoku remains the same, return the sudoku.
+    Input: A sudoku in dictionary form.
+    Output: The resulting sudoku in dictionary form.
+    """
     stalled = False
     while not stalled:
         solved_values_before = len([box for box in values.keys() if len(values[box]) == 1])
@@ -122,6 +162,12 @@ def reduce_puzzle(values):
 
 
 def is_solved(values):
+    """
+    Go through all value and check if there are unsolved boxes
+    Input: A sudoku in dictionary form.
+    Output: True if all boxes are solved.
+            False if at least one box is not solved.
+    """
     for box in values:
         if len(values[box]) > 1:
             return False
@@ -129,6 +175,13 @@ def is_solved(values):
 
 
 def search(values):
+    """
+    Recursive search function. Calls reduce_puzzle() and if sudoku is not solved - branches possible solutions and
+    recursively tries to solve them
+    Input: A sudoku in dictionary form.
+    Output: False if no solution is found
+            Or solved sudoku in dictionary form.
+    """
     values = reduce_puzzle(values)
     if not values:
         return False
